@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday, Jai 🎂</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+<style>
+  :root {
+    --red: #e50914;
+    --red-glow: #ff1f2d;
+    --gold: #ffd700;
+    --purple: #8b5cf6;
+    --pink: #ec4899;
+    --cyan: #06b6d4;
+    --orange: #ff6b35;
+    --green: #22c55e;
+    --dark: #0a0a0f;
+    --card: #16161f;
+    --border: #2a2a3a;
+    --text: #f0f0f5;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: #0a0510;
+    color: var(--text);
+    overflow-x: hidden;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: -10%;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(255, 215, 0, 0.55) 0%, transparent 22%),
+      radial-gradient(circle at 85% 25%, rgba(236, 72, 153, 0.6) 0%, transparent 25%),
+      radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.55) 0%, transparent 28%),
+      radial-gradient(circle at 80% 75%, rgba(229, 9, 20, 0.5) 0%, transparent 26%),
+      radial-gradient(circle at 50% 50%, rgba(255, 107, 53, 0.4) 0%, transparent 30%),
+      radial-gradient(circle at 35% 35%, rgba(6, 182, 212, 0.35) 0%, transparent 25%),
+      radial-gradient(circle at 65% 65%, rgba(255, 215, 0, 0.3) 0%, transparent 22%),
+      linear-gradient(135deg, #1a0820 0%, #0a0510 50%, #150515 100%);
+    filter: blur(60px) saturate(1.4) brightness(0.85);
+    z-index: -2;
+    animation: birthdayBg 20s ease-in-out infinite;
+  }
+  @keyframes birthdayBg {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    33% { transform: scale(1.08) rotate(2deg); }
+    66% { transform: scale(1.04) rotate(-2deg); }
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(2px 2px at 10% 20%, rgba(255,215,0,0.9), transparent),
+      radial-gradient(2px 2px at 25% 60%, rgba(255,255,255,0.7), transparent),
+      radial-gradient(1.5px 1.5px at 40% 15%, rgba(236,72,153,0.9), transparent),
+      radial-gradient(2px 2px at 60% 80%, rgba(255,215,0,0.8), transparent),
+      radial-gradient(1.5px 1.5px at 75% 30%, rgba(139,92,246,0.9), transparent),
+      radial-gradient(2px 2px at 90% 70%, rgba(255,255,255,0.8), transparent),
+      radial-gradient(1.5px 1.5px at 15% 85%, rgba(6,182,212,0.9), transparent),
+      radial-gradient(2px 2px at 50% 45%, rgba(255,215,0,0.8), transparent),
+      radial-gradient(1.5px 1.5px at 85% 50%, rgba(255,255,255,0.7), transparent);
+    background-size: 100% 100%;
+    z-index: -1;
+    animation: sparkle 4s ease-in-out infinite alternate;
+    opacity: 0.7;
+  }
+  @keyframes sparkle {
+    0% { opacity: 0.4; }
+    100% { opacity: 0.9; }
+  }
+
+  /* === TOAST ERROR === */
+  .toast {
+    position: fixed;
+    top: -140px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #e50914, #ff1f2d);
+    color: white;
+    padding: 20px 32px;
+    border-radius: 16px;
+    font-weight: 700;
+    font-size: 1.05rem;
+    box-shadow: 0 12px 50px rgba(229,9,20,0.8);
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: top 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: 2px solid rgba(255,255,255,0.4);
+    max-width: 92vw;
+    text-align: center;
+    letter-spacing: 0.3px;
+  }
+  .toast.show { top: 24px; animation: toastShake 0.5s; }
+  .toast-icon {
+    font-size: 1.8rem;
+    animation: toastPulse 0.6s ease-in-out infinite alternate;
+    flex-shrink: 0;
+  }
+  @keyframes toastShake {
+    0%, 100% { transform: translateX(-50%) rotate(0deg); }
+    25% { transform: translateX(-50%) rotate(-2deg); }
+    75% { transform: translateX(-50%) rotate(2deg); }
+  }
+  @keyframes toastPulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.25); }
+  }
+
+  /* === MUSIC TOGGLE === */
+  .music-toggle {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    background: rgba(10,10,15,0.95);
+    color: var(--gold);
+    font-size: 1.7rem;
+    cursor: pointer;
+    z-index: 1500;
+    display: none;
+    transition: all 0.3s;
+    box-shadow: 0 6px 25px rgba(255,215,0,0.5);
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(6px);
+  }
+  .music-toggle.show { display: flex; }
+  .music-toggle:hover { transform: scale(1.12); background: var(--gold); color: var(--dark); }
+  .music-toggle.playing { animation: musicPulse 1.5s ease-in-out infinite; }
+  @keyframes musicPulse {
+    0%, 100% { box-shadow: 0 6px 25px rgba(255,215,0,0.5); }
+    50% { box-shadow: 0 6px 45px rgba(255,215,0,0.95), 0 0 0 6px rgba(255,215,0,0.15); }
+  }
+
+  /* === PAGES === */
+  .page {
+    display: none;
+    min-height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 80px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    animation: pageIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .page.active { display: flex; }
+  @keyframes pageIn {
+    from { opacity: 0; transform: scale(0.94) translateY(25px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  h1, h2 { font-family: 'Bebas Neue', sans-serif; letter-spacing: 2px; line-height: 1.1; }
+  p { line-height: 1.8; }
+
+  /* === PROGRESS === */
+  .progress-wrap {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+    background: rgba(255,255,255,0.08);
+    z-index: 1001;
+  }
+  .progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--red), var(--pink), var(--gold), var(--cyan));
+    transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 0 15px rgba(229,9,20,0.6);
+  }
+  .page-counter {
+    position: fixed;
+    top: 16px; right: 20px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    color: #aaa;
+    z-index: 1001;
+    background: rgba(10,10,15,0.85);
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+  }
+
+  /* === BUTTONS === */
+  .next-btn {
+    padding: 20px 50px;
+    font-size: 1.15rem;
+    cursor: pointer;
+    background: linear-gradient(135deg, var(--red), var(--pink));
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    margin-top: 44px;
+    transition: all 0.3s;
+    letter-spacing: 0.5px;
+    box-shadow: 0 8px 25px rgba(229,9,20,0.4);
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .next-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent, rgba(255,255,255,0.35), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s;
+  }
+  .next-btn:hover::after { transform: translateX(100%); }
+  .next-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 12px 35px rgba(229,9,20,0.65); }
+  .next-btn:active { transform: translateY(0) scale(0.98); }
+  .next-btn .arrow { transition: transform 0.3s; font-size: 1.3rem; }
+  .next-btn:hover .arrow { transform: translateX(6px); }
+
+  /* === DECORATIONS === */
+  .float-emoji {
+    position: absolute;
+    font-size: 2rem;
+    opacity: 0.25;
+    animation: floatAround 12s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes floatAround {
+    0%, 100% { transform: translate(0,0) rotate(0deg); }
+    33% { transform: translate(40px,-60px) rotate(20deg); }
+    66% { transform: translate(-30px,-30px) rotate(-15deg); }
+  }
+  .gaali {
+    color: var(--red-glow);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* === PAGE 1 === */
+  #page1 h1 {
+    font-size: clamp(3rem, 11vw, 7rem);
+    background: linear-gradient(135deg, var(--red), var(--pink), var(--gold));
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 30px rgba(229,9,20,0.6));
+    animation: glowPulse 2.5s ease-in-out infinite;
+  }
+  @keyframes glowPulse {
+    0%, 100% { filter: drop-shadow(0 0 20px rgba(229,9,20,0.5)); }
+    50% { filter: drop-shadow(0 0 55px rgba(229,9,20,1)); }
+  }
+  #page1 .name-highlight {
+    color: var(--gold);
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(2.5rem, 7vw, 4rem);
+    display: inline-block;
+    margin: 10px 0;
+    text-shadow: 0 0 30px rgba(255,215,0,0.8);
+    animation: namePulse 3s ease-in-out infinite;
+  }
+  @keyframes namePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+  }
+  #page1 > p { font-size: clamp(1rem, 3vw, 1.4rem); margin-top: 24px; max-width: 660px; }
+  #page1 .sub { font-size: clamp(0.9rem, 2.5vw, 1.05rem); margin-top: 16px; color: #ccc; }
+
+  /* === PAGE 2 === */
+  #page2 h2 {
+    font-size: clamp(2rem, 6vw, 3.8rem);
+    background: linear-gradient(135deg, var(--orange), var(--red), var(--pink));
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 20px rgba(255,107,53,0.4));
+  }
+  .tu-sub {
+    opacity: 0.9; margin-top: 14px;
+    font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+    font-style: italic; max-width: 620px;
+  }
+  .tu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 22px; max-width: 1100px; margin-top: 44px; width: 100%;
+  }
+  .tu-card {
+    background: linear-gradient(145deg, rgba(26,10,10,0.85), rgba(20,8,8,0.85));
+    border: 1px solid rgba(255,107,53,0.4);
+    border-radius: 18px; padding: 30px 24px;
+    font-size: 1.05rem; line-height: 1.7;
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative; overflow: hidden; text-align: left;
+    backdrop-filter: blur(10px);
+    opacity: 0; transform: translateY(30px);
+    animation: cardIn 0.6s forwards;
+  }
+  .tu-card:nth-child(1) { animation-delay: 0.1s; }
+  .tu-card:nth-child(2) { animation-delay: 0.2s; }
+  .tu-card:nth-child(3) { animation-delay: 0.3s; }
+  .tu-card:nth-child(4) { animation-delay: 0.4s; }
+  .tu-card:nth-child(5) { animation-delay: 0.5s; }
+  .tu-card:nth-child(6) { animation-delay: 0.6s; }
+  @keyframes cardIn { to { opacity: 1; transform: translateY(0); } }
+  .tu-card::after {
+    content: '🔥'; position: absolute; top: 14px; right: 16px;
+    font-size: 1.4rem; opacity: 0.5; transition: all 0.3s;
+  }
+  .tu-card:hover {
+    transform: translateY(-6px) rotate(-1deg);
+    border-color: var(--orange);
+    box-shadow: 0 18px 40px rgba(255,107,53,0.4);
+  }
+  .tu-card:hover::after { opacity: 1; transform: scale(1.3) rotate(15deg); }
+  .tu-card .tu-num {
+    display: inline-block;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; color: var(--orange);
+    opacity: 0.7; margin-bottom: 6px; letter-spacing: 1px;
+  }
+  .tu-card strong { color: var(--gold); font-weight: 700; }
+  .tu-card.shake { animation: shake 0.5s; }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    15% { transform: translateX(-12px) rotate(-3deg); }
+    30% { transform: translateX(12px) rotate(3deg); }
+    45% { transform: translateX(-10px) rotate(-2deg); }
+    60% { transform: translateX(10px) rotate(2deg); }
+    80% { transform: translateX(-6px) rotate(-1deg); }
+  }
+
+  /* === PAGE 3: QUIZ === */
+  #page3 h2 {
+    font-size: clamp(2rem, 6vw, 3.8rem);
+    background: linear-gradient(135deg, var(--purple), var(--cyan), var(--pink));
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 20px rgba(139,92,246,0.4));
+  }
+  .ragebait-sub {
+    opacity: 0.85; margin-top: 14px;
+    font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+    font-style: italic; max-width: 600px;
+  }
+  .quiz-container { max-width: 620px; width: 100%; margin-top: 40px; }
+  .quiz-card {
+    background: linear-gradient(145deg, rgba(15,10,26,0.92), rgba(10,8,20,0.92));
+    border: 1px solid rgba(139,92,246,0.4);
+    border-radius: 20px;
+    padding: 32px 28px;
+    text-align: left;
+    margin-bottom: 20px;
+    transition: all 0.35s;
+    display: none;
+    backdrop-filter: blur(10px);
+  }
+  .quiz-card.active { display: block; animation: pageIn 0.5s; }
+  .quiz-card:hover {
+    border-color: var(--purple);
+    box-shadow: 0 18px 40px rgba(139,92,246,0.35);
+  }
+  .quiz-card .q-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem; color: var(--purple);
+    letter-spacing: 2px; margin-bottom: 8px;
+  }
+  .quiz-card .rb-question {
+    font-size: 1.2rem; font-weight: 700;
+    margin-bottom: 20px; color: var(--cyan); line-height: 1.5;
+  }
+  .quiz-card .rb-options { display: flex; flex-direction: column; gap: 10px; }
+  .quiz-card .rb-option {
+    padding: 16px 20px;
+    background: rgba(26,26,42,0.8);
+    border: 1px solid #2a2a3a;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.25s;
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
+    color: var(--text);
+  }
+  .quiz-card .rb-option:hover:not(:disabled) {
+    background: rgba(37,37,64,0.95);
+    border-color: var(--purple);
+    transform: translateX(4px);
+  }
+  .quiz-card .rb-option:disabled { cursor: not-allowed; opacity: 0.6; }
+  .quiz-card .rb-option.wrong {
+    background: rgba(229,9,20,0.2);
+    border-color: var(--red);
+    animation: shake 0.5s;
+    opacity: 1;
+  }
+  .quiz-card .rb-option.right {
+    background: rgba(34,197,94,0.2);
+    border-color: var(--green);
+    opacity: 1;
+  }
+  .quiz-card .rb-result {
+    margin-top: 16px; font-size: 0.95rem;
+    font-style: italic; color: var(--gold);
+    min-height: 24px; line-height: 1.6;
+  }
+  .quiz-progress {
+    text-align: center; margin-top: 20px;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 2px; color: #888; font-size: 1.1rem;
+  }
+
+  /* === PAGE 4: EMOTIONAL === */
+  #page4 h2 {
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    background: linear-gradient(135deg, var(--gold), var(--pink));
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 20px rgba(255,215,0,0.4));
+  }
+  .bro-lines {
+    max-width: 620px; margin-top: 36px;
+    font-size: clamp(1rem, 2.5vw, 1.2rem); line-height: 2.4;
+  }
+  .bro-lines span {
+    display: block; opacity: 0; transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .bro-lines span.visible { opacity: 1; transform: translateY(0); }
+  .bro-lines span:nth-child(2) { transition-delay: 0.3s; }
+  .bro-lines span:nth-child(3) { transition-delay: 0.6s; }
+  .bro-lines span:nth-child(4) { transition-delay: 0.9s; }
+
+  #emotional-msg {
+    display: none; max-width: 620px; margin-top: 36px;
+    line-height: 2; color: var(--gold);
+    font-size: clamp(1rem, 2.5vw, 1.15rem);
+    padding: 24px; border: 1px solid var(--gold);
+    border-radius: 16px; background: rgba(255,215,0,0.08);
+    backdrop-filter: blur(8px);
+  }
+  #emotional-msg.show { display: block; animation: pageIn 0.8s forwards; }
+
+  /* === PAGE 5: FINALE === */
+  #page5 .finale-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
+    letter-spacing: 8px;
+    color: var(--red);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    opacity: 0.9;
+  }
+  #page5 h1 {
+    font-size: clamp(3.5rem, 14vw, 10rem);
+    background: linear-gradient(135deg, var(--gold), var(--red), var(--pink), var(--gold));
+    background-size: 300% 300%;
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientMove 4s ease infinite;
+    filter: drop-shadow(0 0 40px rgba(255,215,0,0.4));
+    letter-spacing: 3px;
+    line-height: 0.95;
+    margin: 8px 0;
+  }
+  @keyframes gradientMove {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  #page5 .big-name {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(4rem, 18vw, 12rem);
+    color: var(--gold);
+    text-shadow:
+      0 0 20px rgba(255,215,0,0.8),
+      0 0 40px rgba(255,215,0,0.5),
+      0 0 80px rgba(229,9,20,0.4);
+    line-height: 0.9;
+    margin: 10px 0 30px;
+    animation: nameGlow 3s ease-in-out infinite;
+    letter-spacing: 2px;
+  }
+  @keyframes nameGlow {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(255,215,0,0.7)); }
+    50% { transform: scale(1.05); filter: drop-shadow(0 0 50px rgba(255,215,0,1)); }
+  }
+  .finale-emotional {
+    max-width: 720px; margin-top: 30px;
+    padding: 34px 32px;
+    background: linear-gradient(145deg, rgba(255,215,0,0.12), rgba(229,9,20,0.08));
+    border: 1.5px solid rgba(255,215,0,0.5);
+    border-radius: 22px; line-height: 2;
+    font-size: clamp(1rem, 2.5vw, 1.15rem);
+    text-align: left;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 25px 70px rgba(255,215,0,0.2);
+  }
+  .finale-emotional .fe-head {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.7rem; letter-spacing: 2px;
+    color: var(--gold); margin-bottom: 18px; display: block;
+    text-align: center;
+  }
+  .finale-emotional .fe-sign {
+    display: block; margin-top: 24px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.7rem; color: var(--gold); text-align: right;
+  }
+  .ps {
+    margin-top: 36px !important; font-style: italic;
+    color: var(--red); font-size: clamp(0.9rem, 2.5vw, 1.05rem) !important;
+    max-width: 640px;
+  }
+  .heart {
+    display: inline-block; color: var(--red);
+    animation: heartBeat 1.5s ease-in-out infinite;
+  }
+  @keyframes heartBeat {
+    0%, 100% { transform: scale(1); }
+    25% { transform: scale(1.25); }
+    50% { transform: scale(1); }
+    75% { transform: scale(1.25); }
+  }
+  .restart-btn {
+    background: linear-gradient(135deg, var(--purple), var(--cyan)) !important;
+    box-shadow: 0 8px 25px rgba(139,92,246,0.45) !important;
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .page { padding: 70px 16px; }
+    .tu-grid { grid-template-columns: 1fr; }
+    .next-btn { padding: 16px 36px; font-size: 1rem; }
+    .page-counter { font-size: 0.95rem; padding: 5px 10px; top: 14px; right: 12px; }
+    .music-toggle { width: 52px; height: 52px; font-size: 1.4rem; bottom: 18px; right: 18px; }
+    .finale-emotional { padding: 26px 20px; }
+    .toast { padding: 16px 22px; font-size: 0.95rem; top: -160px; }
+    .toast.show { top: 16px; }
+  }
+  @media (max-width: 400px) {
+    .tu-card, .quiz-card { padding: 24px 18px; font-size: 0.95rem; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">
+    <span class="toast-icon" id="toastIcon">⚠️</span>
+    <span id="toastText"></span>
+  </div>
+
+  <!-- MUSIC TOGGLE -->
+  <button class="music-toggle" id="musicToggle" onclick="toggleMusic()" title="Music on/off">🔊</button>
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+  <div class="page-counter" id="pageCounter">1 / 5</div>
+
+  <!-- === PAGE 1: INTRO === -->
+  <div class="page active" id="page1">
+    <span class="float-emoji" style="top:15%; left:10%;">🎉</span>
+    <span class="float-emoji" style="top:25%; right:12%; animation-delay:-3s;">🎂</span>
+    <span class="float-emoji" style="bottom:20%; left:15%; animation-delay:-6s;">🎈</span>
+    <span class="float-emoji" style="bottom:30%; right:18%; animation-delay:-9s;">🎊</span>
+    <h1>WARNING ⚠️</h1>
+    <p style="margin-top: 20px;">Ye website ek aise insaan ke liye hai</p>
+    <div class="name-highlight">Jai</div>
+    <p>jo mera <strong>bhai nahi hai</strong>... par <strong>bhai se kam bhi nahi</strong>.</p>
+    <p class="sub">Contains extreme levels of bakchodiya, gaaliyaan, roast, aur thoda pyaar.<br>Viewer discretion advised. (Agar tu rota hai toh teri problem hai, <span class="gaali">saale</span>.)</p>
+    <button class="next-btn" onclick="goToPage(2)">Aage badh, <span class="gaali">haramkhor</span> <span class="arrow">→</span></button>
+    <p style="opacity:0.6; margin-top:20px; font-size:0.85rem;">5 pages hain. Music chalta rahega poore time. Volume theek rakh.</p>
+  </div>
+
+  <!-- === PAGE 2: HARAMKHOR === -->
+  <div class="page" id="page2">
+    <h2>Tu Hi Wo Haramkhor Hai 😤</h2>
+    <p class="tu-sub">Jai, har achhi cheez ke peeche tera haath hai. Aur har gandi cheez ke peeche bhi. Sun le apna kissa, <span class="gaali">madarchod</span>.</p>
+
+    <div class="tu-grid">
+      <div class="tu-card">
+        <span class="tu-num">01</span><br>
+        <strong>Pehli baar sharab pilane wala tu hi hai.</strong> Us raat maine kasam khayi thi ki dobara nahi piyunga — aur agle hafte tu phir se bottle leke aa gaya. <span class="gaali">Haramkhor</span>.
+      </div>
+      <div class="tu-card">
+        <span class="tu-num">02</span><br>
+        <strong>Mujhe bigaadne wala tu hi hai.</strong> Ghar walon ne mujhe sudharne bheja tha, aur tu ne mujhe aur bigaad diya. <span class="gaali">Kamine</span>, teri wajah se hi main aaj aisa hoon.
+      </div>
+      <div class="tu-card">
+        <span class="tu-num">03</span><br>
+        <strong>Har galti mein tera hi haath hai.</strong> Main innocent tha, <span class="gaali">saala</span> tu hi mujhe galat raaste pe le gaya — aur phir khud bach gaya. <span class="gaali">Bhosdike</span>, tu hi asli mastermind hai.
+      </div>
+      <div class="tu-card">
+        <span class="tu-num">04</span><br>
+        <strong>Maa ne bola tha door reh usse.</strong> Par main <span class="gaali">bewakoof</span> tha, tere saath chipak gaya. Aaj kaunse gaali kha raha hoon? Main. Aur blame bhi mera hi hai. <span class="gaali">Saale</span>.
+      </div>
+      <div class="tu-card">
+        <span class="tu-num">05</span><br>
+        <strong>Tu wo haramkhor hai</strong> jiske saath main jail jaa sakta hoon — par pakka jaunga bhi, kyunki <span class="gaali">saala</span> tu hi wajah hoga. Aur andar bhi mujhe hi maar khani padegi. <span class="gaali">Kutte</span>.
+      </div>
+      <div class="tu-card">
+        <span class="tu-num">06</span><br>
+        <strong>Aur phir bhi...</strong> tu hi wo hai jise main sabse zyada miss karta hoon. <span class="gaali">Kutte</span>, tu mera bhai nahi, par tu hi mera sab kuch hai. (Ye mat batana kisi ko, warna <span class="gaali">gaand</span> maar dunga.)
+      </div>
+    </div>
+
+    <button class="next-btn" onclick="goToPage(3)">Aage chalo, ab quiz hai <span class="arrow">→</span></button>
+  </div>
+
+  <!-- === PAGE 3: QUIZ === -->
+  <div class="page" id="page3">
+    <h2>Ragebait Quiz 🎯</h2>
+    <p class="ragebait-sub">Har question ka sirf ek sahi jawab hai. Aur wo jawab main hoon. Galat kiya toh <span class="gaali">gaali</span> khayega.</p>
+
+    <div class="quiz-container" id="quizContainer"></div>
+
+    <div class="quiz-progress" id="quizProgress">Question 1 / 4</div>
+    <button class="next-btn" id="quizNextBtn" style="display:none;" onclick="goToPage(4)">Aage chalo, ab emotional part hai <span class="arrow">→</span></button>
+  </div>
+
+  <!-- === PAGE 4: EMOTIONAL === -->
+  <div class="page" id="page4">
+    <h2>Log kehte hain bhai hona chahiye... 🤝</h2>
+    <div class="bro-lines" id="bro-lines">
+      <span>Par maine tujhe choose kiya, Jai.</span>
+      <span>Har fight ke baad bhi jo wapas aa jaata hai.</span>
+      <span>Jo mere secrets jaanta hai aur phir bhi zinda hai.</span>
+      <span>Jo bina bole samajh jaata hai.</span>
+    </div>
+    <button class="next-btn" id="emotional-btn">Okay, ab emotional ho ja thoda</button>
+    <p id="emotional-msg"></p>
+    <button class="next-btn" id="page4Next" style="display:none; background:linear-gradient(135deg,var(--gold),var(--orange));" onclick="goToPage(5)">Aage chalo, last page hai <span class="arrow">→</span></button>
+  </div>
+
+  <!-- === PAGE 5: FINALE === -->
+  <div class="page" id="page5">
+    <span class="float-emoji" style="top:12%; left:10%;">🎂</span>
+    <span class="float-emoji" style="top:18%; right:12%; animation-delay:-4s;">🎉</span>
+    <span class="float-emoji" style="bottom:20%; left:14%; animation-delay:-8s;">🎁</span>
+    <span class="float-emoji" style="bottom:28%; right:16%; animation-delay:-2s;">🎊</span>
+
+    <div class="finale-label">✦ Aaj ka din khaas hai ✦</div>
+    <h1>HAPPY BIRTHDAY</h1>
+    <div class="big-name">Jai</div>
+
+    <div class="finale-emotional">
+      <span class="fe-head">Ab thoda sach, bina gaali ke 💛</span>
+      Pata hai Jai, main tujhe har baat pe gaali deta hoon, har baat pe chidhata hoon. Par sach ye hai —
+      jab bhi kuch bigadta hai, sabse pehle tera naam dimaag mein aata hai. Jab bhi khushi hoti hai,
+      sabse pehle tujhe batana hota hai. Tu wo insaan hai jiske saamne main bina filter ke bol sakta hoon,
+      bina judge hone ke dar ke.
+      <br><br>
+      Bhai toh khoon se hota hai, par tu toh wo hai jise maine khud chuna hai.
+      Har ladai ke baad bhi tu wapas aata hai, har problem mein tu sabse pehle khada hota hai.
+      Tune mujhe kabhi akela nahi chhoda. Chahe main galat tha, chahe main sahi — tu hamesha tha.
+      <br><br>
+      Aur shayad isiliye main tujhe itna gaali deta hoon. Kyunki jo log humein sabse zyada pyaare hote hain,
+      unhe hum sabse zyada roast karte hain.
+      <br><br>
+      <strong style="color: var(--gold); font-size: 1.1em;">Happy Birthday, mere bhai. Tu sach mein special hai. (By choice, always.)</strong>
+      <span class="fe-sign">— Tera haramkhor dost 💛</span>
+    </div>
+
+    <p class="ps">P.S. Tu phir bhi annoying hai. Ye kabhi nahi badlega. <span class="heart">❤️</span> (Aur haan, agle saal bhi cake main hi khaunga, <span class="gaali">saale</span>.)</p>
+
+    <button class="next-btn restart-btn" onclick="goToPage(1)" style="margin-top:40px;">↺ Phir se dekh (kyunki ek baar mein tu satisfy nahi hoga)</button>
+  </div>
+
+<script>
+  const TOTAL_PAGES = 5;
+
+  function goToPage(n) {
+    if (n < 1 || n > TOTAL_PAGES) return;
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const target = document.getElementById('page' + n);
+    if (target) {
+      target.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      document.getElementById('progressBar').style.width = (n / TOTAL_PAGES) * 100 + '%';
+      document.getElementById('pageCounter').textContent = n + ' / ' + TOTAL_PAGES;
+      if (n === 3) initQuiz();
+      if (n === 4) animateBroLines();
+      if (n === 5) fireFinaleConfetti();
+    }
+  }
+
+  /* ========== TOAST ========== */
+  let toastTimer;
+  function showToast(msg, icon = '⚠️') {
+    const toast = document.getElementById('toast');
+    document.getElementById('toastText').textContent = msg;
+    document.getElementById('toastIcon').textContent = icon;
+    toast.classList.add('show');
+    toast.style.animation = 'none';
+    toast.offsetHeight;
+    toast.style.animation = '';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 3200);
+  }
+
+  /* ========== QUIZ ========== */
+  const quizQuestions = [
+    {
+      q: "Sabse bada MC kaun hai?",
+      options: ["Main", "Tu", "Hum dono"],
+      correct: 1,
+      optionErrors: {
+        0: "Kripya karke sach boliye 🙏"
+      },
+      rightMsg: "✅ Sahi jawab! Tu hi sabse bada haramkhor hai. Proud ho ja.",
+      wrongMsg: "❌ GALAT! Dobara try kar, saale."
+    },
+    {
+      q: "Pine ke baad kiska babbar sher jaagta hai?",
+      options: ["Mera", "Tera", "Dono ka"],
+      correct: 0,
+      optionErrors: {
+        1: "Jhooth mat bol, tu 2 pint mein so jaata hai 😴"
+      },
+      rightMsg: "✅ Sahi! Mera babbar sher jaagta hai. Aur phir tu mujhe sambhaalta hai. 😎",
+      wrongMsg: "❌ GALAT! Bhai, soch thoda. Kaun peeke sher ban jaata hai?"
+    },
+    {
+      q: "Sabse zyada drama kaun karta hai?",
+      options: ["Tu", "Main", "Hum dono"],
+      correct: 1,
+      optionErrors: {
+        0: "Bhai, tu khud ko saint samajhta hai? Tu toh daily drama karta hai 😤"
+      },
+      rightMsg: "✅ Sahi! Mera drama Oscar level ka hai. Award mujhe do.",
+      wrongMsg: "❌ Aadha sach. Poora sach = 'Main'."
+    },
+    {
+      q: "Kon bhai se zyada pyaar karta hai?",
+      options: ["Main", "Tu", "Dono"],
+      correct: 2,
+      optionErrors: {
+        0: "Chutiye dono same krte 🙄",
+        1: "Chutiye dono same krte 🙄"
+      },
+      rightMsg: "✅ Sahi jawab! Dono barabar karte hain. (Ab emotional mat ho, gaali bhi milegi.)",
+      wrongMsg: "❌ GALAT! Soch thoda."
+    }
+  ];
+
+  let quizInitialized = false;
+
+  function initQuiz() {
+    if (quizInitialized) return;
+    quizInitialized = true;
+
+    const container = document.getElementById('quizContainer');
+    container.innerHTML = '';
+
+    quizQuestions.forEach((item, index) => {
+      const card = document.createElement('div');
+      card.className = 'quiz-card' + (index === 0 ? ' active' : '');
+      card.dataset.index = index;
+      card.dataset.answered = 'false';
+
+      let optionsHTML = '';
+      item.options.forEach((opt, optIndex) => {
+        optionsHTML += `<button class="rb-option" data-correct="${optIndex === item.correct}" data-index="${optIndex}">${opt}</button>`;
+      });
+
+      card.innerHTML = `
+        <div class="q-num">QUESTION ${index + 1}</div>
+        <div class="rb-question">${item.q}</div>
+        <div class="rb-options">${optionsHTML}</div>
+        <div class="rb-result"></div>
+      `;
+
+      container.appendChild(card);
+
+      card.querySelectorAll('.rb-option').forEach(option => {
+        option.addEventListener('click', () => {
+          if (card.dataset.answered === 'true') return;
+
+          const optIndex = parseInt(option.dataset.index);
+          const isCorrect = option.dataset.correct === 'true';
+          const result = card.querySelector('.rb-result');
+
+          if (item.optionErrors && item.optionErrors[optIndex]) {
+            showToast(item.optionErrors[optIndex], '⚠️');
+            option.classList.add('wrong');
+            setTimeout(() => option.classList.remove('wrong'), 900);
+            return;
+          }
+
+          card.dataset.answered = 'true';
+          card.querySelectorAll('.rb-option').forEach(o => o.disabled = true);
+
+          if (isCorrect) {
+            option.classList.add('right');
+            result.innerHTML = item.rightMsg;
+            result.style.color = 'var(--green)';
+            confetti({ particleCount: 60, spread: 70, origin: { y: 0.6 } });
+
+            setTimeout(() => {
+              card.classList.remove('active');
+              if (index + 1 < quizQuestions.length) {
+                const nextCard = container.children[index + 1];
+                nextCard.classList.add('active');
+                document.getElementById('quizProgress').textContent = `Question ${index + 2} / ${quizQuestions.length}`;
+              } else {
+                document.getElementById('quizProgress').textContent = `✓ Saare ${quizQuestions.length} sahi! Ab aage chalo.`;
+                document.getElementById('quizNextBtn').style.display = 'inline-flex';
+              }
+            }, 1600);
+          } else {
+            option.classList.add('wrong');
+            result.innerHTML = item.wrongMsg;
+            result.style.color = 'var(--red)';
+            setTimeout(() => {
+              option.classList.remove('wrong');
+              card.querySelectorAll('.rb-option').forEach(o => o.disabled = false);
+              card.dataset.answered = 'false';
+              result.innerHTML = '';
+            }, 1800);
+          }
+        });
+      });
+    });
+
+    document.getElementById('quizProgress').textContent = `Question 1 / ${quizQuestions.length}`;
+    document.getElementById('quizNextBtn').style.display = 'none';
+  }
+
+  /* ========== HAPPY BIRTHDAY MUSIC ========== */
+  let audioCtx = null;
+  let musicPlaying = false;
+  let musicTimeout = null;
+  let musicMuted = false;
+
+  const HAPPY_BIRTHDAY_MELODY = [
+    [392.00, 0.75], [392.00, 0.25], [440.00, 1], [392.00, 1], [523.25, 1], [493.88, 1.75],
+    [392.00, 0.75], [392.00, 0.25], [440.00, 1], [392.00, 1], [587.33, 1], [523.25, 1.75],
+    [392.00, 0.75], [392.00, 0.25], [783.99, 1], [659.25, 1], [523.25, 1], [493.88, 1], [440.00, 1.75],
+    [698.46, 0.75], [698.46, 0.25], [659.25, 1], [523.25, 1], [587.33, 1], [523.25, 1.75],
+    [0, 1.5]
+  ];
+
+  function startBirthdayMusic() {
+    if (musicPlaying) return;
+    try {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      musicPlaying = true;
+      const toggle = document.getElementById('musicToggle');
+      toggle.classList.add('show', 'playing');
+      toggle.textContent = '🔊';
+      playMelodyOnce();
+      scheduleLoop(melodyDurationMs());
+    } catch (err) {
+      console.error('Audio failed:', err);
+    }
+  }
+
+  function melodyDurationMs() {
+    const beatDuration = 0.45;
+    const totalBeats = HAPPY_BIRTHDAY_MELODY.reduce((sum, [, d]) => sum + d, 0);
+    return totalBeats * beatDuration * 1000 + 400;
+  }
+
+  function scheduleLoop(ms) {
+    clearTimeout(musicTimeout);
+    musicTimeout = setTimeout(() => {
+      if (!musicPlaying) return;
+      playMelodyOnce();
+      scheduleLoop(melodyDurationMs());
+    }, ms);
+  }
+
+  function playMelodyOnce() {
+    if (!audioCtx || musicMuted) return;
+    const ctx = audioCtx;
+    const now = ctx.currentTime + 0.15;
+
+    const masterGain = ctx.createGain();
+    masterGain.gain.value = 0.15;
+
+    const lowpass = ctx.createBiquadFilter();
+    lowpass.type = 'lowpass';
+    lowpass.frequency.value = 2200;
+    lowpass.Q.value = 0.6;
+
+    lowpass.connect(masterGain);
+    masterGain.connect(ctx.destination);
+
+    const delay = ctx.createDelay();
+    delay.delayTime.value = 0.18;
+    const feedback = ctx.createGain();
+    feedback.gain.value = 0.25;
+    const wetGain = ctx.createGain();
+    wetGain.gain.value = 0.16;
+    lowpass.connect(delay);
+    delay.connect(feedback);
+    feedback.connect(delay);
+    delay.connect(wetGain);
+    wetGain.connect(masterGain);
+
+    const beatDuration = 0.45;
+    let time = now;
+
+    HAPPY_BIRTHDAY_MELODY.forEach(([freq, dur]) => {
+      const noteDur = dur * beatDuration;
+      const noteStart = time;
+      const noteEnd = noteStart + noteDur;
+
+      if (freq > 0) {
+        const osc = ctx.createOscillator();
+        osc.type = 'triangle';
+        osc.frequency.value = freq;
+
+        const sub = ctx.createOscillator();
+        sub.type = 'sine';
+        sub.frequency.value = freq / 2;
+
+        const subGain = ctx.createGain();
+        subGain.gain.value = 0.35;
+
+        const env = ctx.createGain();
+        env.gain.setValueAtTime(0, noteStart);
+        env.gain.linearRampToValueAtTime(0.42, noteStart + 0.04);
+        env.gain.linearRampToValueAtTime(0.28, noteStart + noteDur * 0.45);
+        env.gain.linearRampToValueAtTime(0.16, noteStart + noteDur * 0.8);
+        env.gain.linearRampToValueAtTime(0, noteEnd - 0.02);
+
+        osc.connect(env);
+        sub.connect(subGain);
+        subGain.connect(env);
+        env.connect(lowpass);
+
+        osc.start(noteStart);
+        osc.stop(noteEnd + 0.05);
+        sub.start(noteStart);
+        sub.stop(noteEnd + 0.05);
+      }
+
+      time = noteEnd;
+    });
+  }
+
+  function toggleMusic() {
+    if (!audioCtx) return;
+    const toggle = document.getElementById('musicToggle');
+    if (musicMuted || audioCtx.state === 'suspended') {
+      musicMuted = false;
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      toggle.textContent = '🔊';
+      toggle.classList.add('playing');
+      if (!musicPlaying) {
+        musicPlaying = true;
+        playMelodyOnce();
+        scheduleLoop(melodyDurationMs());
+      }
+    } else {
+      musicMuted = true;
+      audioCtx.suspend();
+      toggle.textContent = '🔇';
+      toggle.classList.remove('playing');
+    }
+  }
+
+  /* ========== AUTO-START MUSIC ========== */
+  window.addEventListener('load', () => {
+    startBirthdayMusic();
+    setTimeout(() => {
+      if (audioCtx && audioCtx.state === 'suspended') {
+        const startOnInteraction = () => {
+          startBirthdayMusic();
+          document.removeEventListener('click', startOnInteraction);
+          document.removeEventListener('touchstart', startOnInteraction);
+          document.removeEventListener('keydown', startOnInteraction);
+        };
+        document.addEventListener('click', startOnInteraction, { once: true });
+        document.addEventListener('touchstart', startOnInteraction, { once: true });
+        document.addEventListener('keydown', startOnInteraction, { once: true });
+      }
+    }, 1500);
+  });
+
+  /* ========== BRO LINES ========== */
+  function animateBroLines() {
+    const lines = document.querySelectorAll('#bro-lines span');
+    lines.forEach(s => s.classList.remove('visible'));
+    setTimeout(() => {
+      lines.forEach(s => s.classList.add('visible'));
+    }, 300);
+  }
+
+  /* ========== FINALE CONFETTI ========== */
+  let confettiFired = false;
+  function fireFinaleConfetti() {
+    if (confettiFired) return;
+    confettiFired = true;
+    const end = Date.now() + 6000;
+    (function frame() {
+      confetti({ particleCount: 7, angle: 60, spread: 55, origin: { x: 0 },
+        colors: ['#e50914', '#ffd700', '#ec4899', '#8b5cf6', '#22c55e'] });
+      confetti({ particleCount: 7, angle: 120, spread: 55, origin: { x: 1 },
+        colors: ['#e50914', '#ffd700', '#ec4899', '#8b5cf6', '#22c55e'] });
+      if (Date.now() < end) requestAnimationFrame(frame);
+    })();
+  }
+
+  /* ========== SHAKE + CONFETTI ON TU-CARD CLICK ========== */
+  document.querySelectorAll('.tu-card').forEach(card => {
+    card.addEventListener('click', () => {
+      card.classList.add('shake');
+      setTimeout(() => card.classList.remove('shake'), 500);
+      const rect = card.getBoundingClientRect();
+      confetti({
+        particleCount: 22, spread: 60,
+        origin: {
+          x: (rect.left + rect.width / 2) / window.innerWidth,
+          y: (rect.top + rect.height / 2) / window.innerHeight
+        },
+        colors: ['#e50914', '#ffd700', '#8b5cf6', '#ff6b35']
+      });
+    });
+  });
+
+  /* ========== EMOTIONAL BUTTON ========== */
+  const emoBtn = document.getElementById('emotional-btn');
+  emoBtn.addEventListener('click', () => {
+    const msg = document.getElementById('emotional-msg');
+    msg.innerHTML = "Jai, tu mera bhai nahi hai, par tu hi wo insaan hai jise main raat 2 baje call kar sakta hoon. Aur tu uth bhi jaayega. Ye hi kaafi hai, <span class='gaali'>haramkhor</span>.";
+    msg.classList.add('show');
+    emoBtn.style.display = 'none';
+    document.getElementById('page4Next').style.display = 'inline-flex';
+    confetti({ particleCount: 120, spread: 90, origin: { y: 0.7 } });
+  });
+
+  /* ========== INIT ========== */
+  document.getElementById('progressBar').style.width = (1 / TOTAL_PAGES) * 100 + '%';
+</script>
+</body>
+</html>
